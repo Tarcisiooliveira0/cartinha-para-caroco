@@ -2,45 +2,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#281521">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Uma cartinha para você ♡</title>
 
 <style>
 :root {
-  --wine: #3a1c2c;
-  --rose: #e9a8bd;
-  --cream: #fff7f1;
-  --ink: #351d29;
-  --muted: #876b78;
+  --muted: #9c7b89;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: #fff8f5;
-  color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
+  background: #fffaf8;
+  color: #432536;
 }
 
-button, a {
-  font: inherit;
-  -webkit-tap-highlight-color: transparent;
+.hidden {
+  display: none !important;
 }
 
-button { touch-action: manipulation; }
-
-.hidden { display: none !important; }
-
-/* TELA INICIAL */
+/* TELA DA CARTA FECHADA */
 
 .envelope-screen {
   min-height: 100vh;
@@ -48,87 +38,47 @@ button { touch-action: manipulation; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 18px;
+  padding: 30px 20px;
   text-align: center;
-  color: #fff7f6;
-  background: radial-gradient(
-    ellipse at 18% 10%,
-    #75465b 0,
-    #3b2030 46%,
-    #21131d 100%
-  );
-  position: relative;
-  overflow: hidden;
-}
-
-.envelope-screen::before,
-.envelope-screen::after {
-  content: "";
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: #f5bfd022;
-  filter: blur(3px);
-  pointer-events: none;
-}
-
-.envelope-screen::before {
-  top: -130px;
-  left: -110px;
-}
-
-.envelope-screen::after {
-  right: -160px;
-  bottom: -120px;
+  background: radial-gradient(ellipse at center, #fff6f7, #f4dce5);
 }
 
 .intro-inner {
-  position: relative;
-  z-index: 1;
   width: 100%;
-  max-width: 460px;
-  animation: rise .8s ease both;
+  max-width: 480px;
 }
 
 .smallcaps {
   font: 11px Arial, sans-serif;
-  letter-spacing: .22em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: #f1bfd0;
+  color: #a86c84;
 }
 
-.intro-inner h1 {
-  font-weight: normal;
-  font-size: clamp(34px, 9vw, 54px);
+.envelope-screen h1 {
+  font-size: clamp(36px, 9vw, 54px);
   line-height: 1.1;
-  margin: 18px 0 12px;
+  font-weight: normal;
+  margin: 20px 0;
 }
 
-.intro-inner p {
-  font-size: 17px;
+.envelope-screen p {
+  max-width: 350px;
+  margin: 0 auto 28px;
+  color: #80566a;
+  font-size: 16px;
   line-height: 1.7;
-  color: #f1dfe6;
-  max-width: 390px;
-  margin: 0 auto;
 }
-
-/* ENVELOPE */
 
 .envelope {
-  appearance: none;
-  -webkit-appearance: none;
   display: block;
   position: relative;
-  isolation: isolate;
-  width: min(290px, 78vw);
-  height: 178px;
-  margin: 30px auto 26px;
+  width: min(320px, 85vw);
+  height: 210px;
+  margin: 0 auto 25px;
   padding: 0;
   border: 0;
-  border-radius: 9px;
-  background: #f2bfd0;
-  box-shadow: 0 18px 45px #10081166;
+  border-radius: 8px;
   cursor: pointer;
   overflow: hidden;
   transform: translateZ(0);
@@ -214,7 +164,9 @@ button { touch-action: manipulation; }
   pointer-events: none;
 }
 
-.envelope:active { transform: scale(.98); }
+.envelope:active {
+  transform: scale(.98);
+}
 
 .open-btn {
   display: inline-flex;
@@ -336,11 +288,15 @@ button { touch-action: manipulation; }
   display: block;
 }
 
-.heart { color: #e9a8bd; }
+.heart {
+  color: #e9a8bd;
+}
 
 /* CARTINHA */
 
-section { padding: 76px 20px; }
+section {
+  padding: 76px 20px;
+}
 
 .section-inner {
   max-width: 760px;
@@ -374,11 +330,15 @@ p {
   box-shadow: 0 12px 45px #5b26300d;
 }
 
-.letter-card p { font-size: 18px; }
+.letter-card p {
+  font-size: 18px;
+}
 
 /* MÚSICA */
 
-.music { background: #f6e8ed; }
+.music {
+  background: #f6e8ed;
+}
 
 .music-card {
   background: #fffaf8;
@@ -432,7 +392,9 @@ p {
   color: var(--muted);
 }
 
-.play-btn { margin-top: 18px; }
+.play-btn {
+  margin-top: 18px;
+}
 
 .player {
   display: block;
@@ -450,8 +412,13 @@ p {
   margin-top: 18px;
 }
 
-.vinyl { animation-play-state: paused; }
-.vinyl.playing { animation-play-state: running; }
+.vinyl {
+  animation-play-state: paused;
+}
+
+.vinyl.playing {
+  animation-play-state: running;
+}
 
 /* SURPRESA FINAL */
 
@@ -461,7 +428,9 @@ p {
   text-align: center;
 }
 
-.secret p { color: #f0dce4; }
+.secret p {
+  color: #f0dce4;
+}
 
 .secret-box {
   margin: 28px auto 0;
@@ -478,8 +447,13 @@ p {
   animation: rise .6s ease both;
 }
 
-.secret-content.show { display: block; }
-.secret-content p { font-size: 19px; }
+.secret-content.show {
+  display: block;
+}
+
+.secret-content p {
+  font-size: 19px;
+}
 
 footer {
   padding: 30px 18px;
@@ -513,7 +487,9 @@ footer {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes floatUp {
@@ -521,8 +497,12 @@ footer {
     opacity: 0;
     transform: translateY(0) rotate(0);
   }
-  15% { opacity: .5; }
-  80% { opacity: .35; }
+  15% {
+    opacity: .5;
+  }
+  80% {
+    opacity: .35;
+  }
   100% {
     opacity: 0;
     transform: translateY(-110vh) rotate(35deg);
@@ -530,7 +510,9 @@ footer {
 }
 
 @media (max-width: 520px) {
-  .music-top { align-items: flex-start; }
+  .music-top {
+    align-items: flex-start;
+  }
 
   .vinyl {
     width: 60px;
@@ -538,9 +520,17 @@ footer {
     flex-basis: 60px;
   }
 
-  .music-card h3 { font-size: 18px; }
-  section { padding: 58px 18px; }
-  .envelope { max-width: 290px; }
+  .music-card h3 {
+    font-size: 18px;
+  }
+
+  section {
+    padding: 58px 18px;
+  }
+
+  .envelope {
+    max-width: 290px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -612,7 +602,7 @@ footer {
 
       <div class="photo-wrap">
         <img
-          src="https://www.google.com/search?client=ms-android-motorola-rvo3&hs=hpVB&sca_esv=884dd6fe85adf28f&sxsrf=APpeQnvTGhNdwmASEb6ckWH0u1eGNtYSwQ:1792457094837&udm=2&fbs=ABfTbFVGaQeaqnsRPI5sOMG32KszkLt6nAp8aiRKj5vMjqZApKYr2wv-EHakX1SS4JF8fY1OAHmsXq59YBfu7dh6O2RM03m9LuaqZa9S5KBk8FC57zOEk2xpmC6US-mSs7WN7sEDyXVMwB4j3abucGwfjOoHQYZ0jt32NZZrU23LjdKjsgbiKW8co1CLQ3mqFQ4X3L-mArKgw8uySpO5oy2KglFZUQjIUnF67G7u_WHRY0yH-6-5KSw&q=foto&sa=X&sqi=2&ved=2ahUKEwjGhaaDr8eXAxVanpUCHeHeFSUQtKgLegQIIRAB&biw=411&bih=797&dpr=1.75#sv=CAMSVxoyKhBlLW4tejdhUE9xWHl6SkFNMg5uLXo3YVBPcVh5ekpBTToObUhkc3NsZHhjTFBTQk0gBCoXCgFzEhBlLW4tejdhUE9xWHl6SkFNGAEwAUoECAEQAhgHIOHT2LAISggQAhgBIAIoAQ"
+          src="amor.png"
           alt="Foto da Caroço"
           onerror="this.style.display='none';this.parentElement.style.background='#fff9f1';"
         >
@@ -696,7 +686,7 @@ footer {
     </div>
   </section>
 
-  <!-- MÚSICA DO GOOGLE DRIVE -->
+  <!-- MÚSICA DO ARQUIVO LOCAL -->
 
   <section class="music" id="musica">
     <div class="section-inner">
@@ -822,7 +812,7 @@ document.getElementById("enterSite").addEventListener("click", enter);
 document.getElementById("openLetter").addEventListener("click", enter);
 
 
-/* TOCAR A MÚSICA DO GOOGLE DRIVE */
+/* TOCAR A MÚSICA DO ARQUIVO LOCAL */
 
 const musicButton = document.getElementById("playMusic");
 const playerArea = document.getElementById("playerArea");
@@ -838,8 +828,7 @@ musicButton.addEventListener("click", async function () {
     driveAudio.controls = true;
     driveAudio.preload = "metadata";
 
-    driveAudio.src =
-      "https://drive.google.com/uc?export=download&id=ID_DA_MUSICA";
+    driveAudio.src = "musica.mp3";
 
     driveAudio.addEventListener("play", function () {
       vinylDisc.classList.add("playing");
