@@ -1,0 +1,1095 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#321a29">
+<title>Uma cartinha para você ♡</title>
+
+<style>
+:root { --muted: #9c7b89; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #fffaf8;
+  color: #432536;
+}
+.hidden { display: none !important; }
+
+/* ENVELOPE ORIGINAL */
+.envelope-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  text-align: center;
+  background: radial-gradient(ellipse at center, #fff6f7, #f4dce5);
+}
+.intro-inner { width: 100%; max-width: 480px; }
+.smallcaps {
+  font: 11px Arial, sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #a86c84;
+}
+.envelope-screen h1 {
+  font-size: clamp(36px, 9vw, 54px);
+  line-height: 1.1;
+  font-weight: normal;
+  margin: 20px 0;
+}
+.envelope-screen p {
+  max-width: 350px;
+  margin: 0 auto 28px;
+  color: #80566a;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.envelope {
+  display: block;
+  position: relative;
+  width: min(320px, 85vw);
+  height: 210px;
+  margin: 0 auto 25px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+.envelope-back {
+  position: absolute; inset: 0;
+  z-index: 0; background: #f8dce5;
+}
+.letter-peek {
+  position: absolute; z-index: 2;
+  left: 12%; right: 12%; top: 10px;
+  height: 135px; border-radius: 6px;
+  background: #fffaf7; color: #8e4a67;
+  display: flex; align-items: flex-start;
+  justify-content: center; padding: 23px 8px 0;
+  font-size: 25px; line-height: 1.3;
+  box-shadow: 0 2px 8px #56233912;
+}
+.envelope-flap {
+  position: absolute; inset: 0; z-index: 1;
+  background: #e8a8bf;
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  pointer-events: none;
+}
+.envelope-left, .envelope-right {
+  position: absolute; inset: 0; z-index: 3;
+  pointer-events: none;
+}
+.envelope-left {
+  background: #efb7ca;
+  clip-path: polygon(0 0, 52% 50%, 0 100%);
+}
+.envelope-right {
+  background: #efb7ca;
+  clip-path: polygon(100% 0, 48% 50%, 100% 100%);
+}
+.envelope-front {
+  position: absolute; inset: 0; z-index: 4;
+  background: #f9dce5;
+  clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+  pointer-events: none;
+}
+.envelope-seal {
+  position: absolute; z-index: 5;
+  left: 50%; top: 56%;
+  transform: translate(-50%, -50%);
+  width: 45px; height: 45px; border-radius: 50%;
+  background: #9e4c6d; color: white;
+  display: grid; place-items: center; font-size: 22px;
+  box-shadow: 0 3px 8px #56233933;
+  pointer-events: none;
+}
+.envelope:active { transform: scale(.98); }
+
+.open-btn {
+  display: inline-flex;
+  align-items: center; justify-content: center; gap: 9px;
+  padding: 14px 24px; min-height: 48px;
+  border: 1px solid #f1bfd0; border-radius: 999px;
+  background: #f4c4d4; color: #351b29;
+  text-decoration: none; cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+  font-family: inherit; font-size: 15px;
+}
+.open-btn:hover { transform: translateY(-2px); background: #ffe1e9; }
+.tiny {
+  font: 12px Arial, sans-serif;
+  color: #d9b9c6; margin-top: 16px;
+}
+
+/* NOVA TELA DE CONTAGEM REGRESSIVA */
+.countdown-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 35px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff6f8;
+  background:
+    radial-gradient(ellipse at 50% 20%, #76445a 0, #3b2030 48%, #21131d 100%);
+}
+.countdown-inner { width: 100%; max-width: 540px; }
+.countdown-screen .smallcaps { color: #efb7ca; }
+.countdown-screen h1 {
+  font-size: clamp(36px, 9vw, 58px);
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 22px 0 15px;
+}
+.countdown-message {
+  max-width: 430px;
+  margin: 0 auto 25px;
+  color: #f0dce4;
+  font-size: 17px;
+  line-height: 1.8;
+}
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin: 28px 0;
+}
+.time-box {
+  padding: 17px 5px;
+  border: 1px solid #b57b9355;
+  border-radius: 14px;
+  background: #ffffff0c;
+}
+.time-number {
+  display: block;
+  font: 32px Arial, sans-serif;
+  color: #ffe1e9;
+}
+.time-label {
+  display: block;
+  font: 10px Arial, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #d8b7c6;
+  margin-top: 8px;
+}
+.password-area {
+  max-width: 340px;
+  margin: 28px auto 0;
+  padding: 20px;
+  border: 1px solid #b57b9355;
+  border-radius: 16px;
+  background: #ffffff08;
+}
+.password-area p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #f0dce4;
+  margin: 0 0 14px;
+}
+.password-area input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #d8a9bb;
+  border-radius: 10px;
+  background: #fffaf8;
+  color: #432536;
+  font-size: 17px;
+  text-align: center;
+  letter-spacing: .18em;
+}
+.password-area .open-btn { width: 100%; }
+.password-error {
+  min-height: 18px;
+  margin-top: 12px;
+  color: #ffd4df;
+  font: 13px Arial, sans-serif;
+}
+.ambient-control {
+  position: fixed;
+  z-index: 100;
+  right: 14px;
+  bottom: 14px;
+  max-width: calc(100vw - 28px);
+  border: 1px solid #f1bfd0;
+  border-radius: 999px;
+  background: #fffaf8ee;
+  color: #432536;
+  padding: 11px 15px;
+  font: 13px Arial, sans-serif;
+  box-shadow: 0 4px 18px #21131d22;
+  cursor: pointer;
+}
+
+/* CAPA PRINCIPAL ORIGINAL */
+.hero {
+  min-height: 100vh; min-height: 100svh;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px 18px;
+  background: radial-gradient(ellipse at 50% 20%, #76445a 0, #3b2030 48%, #21131d 100%);
+  color: #fff8f6; text-align: center;
+}
+.glow {
+  position: absolute; border-radius: 50%;
+  filter: blur(2px); background: #f4b5ca22;
+  pointer-events: none;
+}
+.g1 { width: 280px; height: 280px; top: -80px; left: -80px; }
+.g2 { width: 360px; height: 360px; right: -170px; bottom: -120px; }
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 560px; animation: rise 1.2s ease both;
+}
+.eyebrow {
+  letter-spacing: .22em; text-transform: uppercase;
+  font: 11px Arial, sans-serif; color: #f4c8d7;
+}
+.hero h1 {
+  font-size: clamp(44px, 12vw, 78px);
+  line-height: .98; font-weight: normal; margin: 18px 0 14px;
+}
+.subtitle {
+  font-size: 18px; line-height: 1.7; color: #f4e1e7;
+  max-width: 420px; margin: 0 auto 24px;
+}
+.photo-wrap {
+  width: 160px; height: 190px; margin: 24px auto 22px;
+  padding: 7px; background: #fff9f1;
+  border-radius: 100px 100px 24px 24px;
+  box-shadow: 0 12px 50px #130a12aa;
+  transform: rotate(-2deg); overflow: hidden;
+}
+.photo-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center 38%;
+  border-radius: 95px 95px 18px 18px; display: block;
+}
+.heart { color: #e9a8bd; }
+
+/* CARTINHA ORIGINAL */
+section { padding: 76px 20px; }
+.section-inner { max-width: 760px; margin: auto; }
+.kicker {
+  font: 11px Arial, sans-serif; letter-spacing: .2em;
+  text-transform: uppercase; color: #b66f8b;
+}
+h2 {
+  font-size: clamp(30px, 7vw, 46px);
+  font-weight: normal; line-height: 1.12; margin: 12px 0 20px;
+}
+p { font-size: 17px; line-height: 1.85; }
+.letter-card {
+  background: #fffdf9; border: 1px solid #f0dce2;
+  border-radius: 18px; padding: clamp(22px, 6vw, 42px);
+  box-shadow: 0 12px 45px #5b26300d;
+}
+.letter-card p { font-size: 18px; }
+
+/* MÚSICA ORIGINAL */
+.music { background: #f6e8ed; }
+.music-card {
+  background: #fffaf8; padding: 20px;
+  border-radius: 18px; border: 1px solid #efd7e0; margin-top: 24px;
+}
+.music-top { display: flex; align-items: center; gap: 18px; }
+.vinyl {
+  flex: 0 0 76px; width: 76px; height: 76px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #271822 0 3px, #49303e 4px 6px);
+  display: grid; place-items: center; animation: spin 12s linear infinite;
+  animation-play-state: paused;
+}
+.vinyl span {
+  width: 25px; height: 25px; border-radius: 50%;
+  background: #e7a4bc; display: grid; place-items: center;
+  color: #452333; font-size: 12px;
+}
+.vinyl.playing { animation-play-state: running; }
+.music-card h3 { margin: 0 0 6px; font-weight: normal; font-size: 21px; }
+.music-card p { font: 13px/1.5 Arial, sans-serif; margin: 0; color: var(--muted); }
+.play-btn { margin-top: 18px; }
+.player {
+  display: block; margin-top: 18px; width: 100%;
+  aspect-ratio: 16 / 9; border: 0; border-radius: 12px; background: #21131d;
+}
+.player-audio { display: block; width: 100%; margin-top: 18px; }
+
+/* SURPRESA ORIGINAL */
+.secret {
+  background: linear-gradient(150deg, #321a29, #5b3046);
+  color: #fff6f7; text-align: center;
+}
+.secret p { color: #f0dce4; }
+.secret-box { margin: 28px auto 0; max-width: 560px; }
+.secret-content {
+  display: none; margin-top: 24px; padding: 24px;
+  border: 1px solid #b57b93; border-radius: 18px;
+  background: #ffffff0a; animation: rise .6s ease both;
+}
+.secret-content.show { display: block; }
+.secret-content p { font-size: 19px; }
+footer {
+  padding: 30px 18px; text-align: center;
+  background: #21131d; color: #d6b6c4;
+  font: 12px Arial, sans-serif; letter-spacing: .05em;
+}
+
+/* NOVAS CARTINHAS */
+.surprise-letters { background: #fff8f7; }
+.letter-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 13px; margin-top: 25px;
+}
+.mini-letter {
+  min-height: 135px;
+  padding: 20px 12px;
+  border: 1px solid #f0d2df;
+  border-radius: 16px;
+  background: #fffdf9;
+  color: #704158;
+  font: 16px/1.5 Georgia, serif;
+  cursor: pointer;
+  box-shadow: 0 6px 20px #5b26300a;
+  transition: transform .2s, background .2s;
+}
+.mini-letter:hover { transform: translateY(-3px); background: #fff0f5; }
+.mini-letter span { display: block; font-size: 28px; margin-bottom: 10px; }
+.love-note {
+  display: none;
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #f0d2df;
+  border-radius: 16px;
+  background: #fff;
+  animation: rise .5s ease both;
+}
+.love-note.show { display: block; }
+.love-note p { font-size: 17px; }
+
+/* CÉU ESTRELADO */
+.star-section {
+  position: relative;
+  overflow: hidden;
+  color: #fff6f8;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 100%, #58324f 0, #21152f 55%, #10101f 100%);
+}
+.star-section .kicker { color: #e7bad4; }
+.star-section p { color: #eadbe9; }
+.star-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff9f4;
+  box-shadow: 0 0 7px #ffe7f7;
+  animation: twinkle 2.8s ease-in-out infinite alternate;
+}
+.moon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  background: #fff0d6;
+  box-shadow: 0 0 35px #f6d5e855, 0 0 90px #d9b7f522;
+}
+.star-content { position: relative; z-index: 1; }
+.star-message {
+  max-width: 580px;
+  margin: 25px auto 0;
+  padding: 22px;
+  border: 1px solid #d9b7f255;
+  border-radius: 18px;
+  background: #ffffff09;
+}
+
+/* ÁLBUM DE CINCO FOTOS */
+.gallery-section { background: #f6e8ed; }
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+.gallery-item {
+  padding: 10px 10px 18px;
+  background: #fffdf9;
+  border: 1px solid #efd7e0;
+  border-radius: 7px;
+  box-shadow: 0 8px 22px #5b263015;
+  transform: rotate(-1deg);
+}
+.gallery-item:nth-child(even) { transform: rotate(1.5deg); }
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #f4dce5;
+}
+.gallery-caption {
+  text-align: center;
+  color: #80566a;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.gallery-tip {
+  margin-top: 18px;
+  color: #9c7b89;
+  font: 12px/1.6 Arial, sans-serif;
+}
+
+/* CORAÇÕES FLUTUANTES */
+.float-heart {
+  position: absolute; bottom: -30px; color: #f6c3d4;
+  opacity: 0; animation: floatUp 8s linear infinite; pointer-events: none;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(0) rotate(0); }
+  15% { opacity: .5; }
+  80% { opacity: .35; }
+  100% { opacity: 0; transform: translateY(-110vh) rotate(35deg); }
+}
+@keyframes twinkle {
+  from { opacity: .35; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+@media (max-width: 520px) {
+  .music-top { align-items: flex-start; }
+  .vinyl { width: 60px; height: 60px; flex-basis: 60px; }
+  .music-card h3 { font-size: 18px; }
+  section { padding: 58px 18px; }
+  .envelope { max-width: 290px; }
+  .countdown-grid { gap: 6px; }
+  .time-box { padding: 14px 3px; }
+  .time-number { font-size: 25px; }
+  .time-label { font-size: 9px; letter-spacing: 0; }
+  .photo-gallery { gap: 10px; }
+  .gallery-item { padding: 7px 7px 13px; }
+  .gallery-item img { height: 155px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE ORIGINAL -->
+
+<div class="envelope-screen" id="intro">
+  <div class="intro-inner">
+    <div class="smallcaps">Uma surpresa de aniversário</div>
+    <h1>Uma cartinha<br>para você ♡</h1>
+    <p>
+      Antes de começar seu dia especial, queria te entregar
+      uma coisinha feita com carinho.
+    </p>
+
+    <button class="envelope" id="openLetter" type="button"
+      aria-label="Abrir a carta e entrar no site">
+      <span class="envelope-back" aria-hidden="true"></span>
+      <span class="envelope-flap" aria-hidden="true"></span>
+      <span class="letter-peek">Para Caroço ♡</span>
+      <span class="envelope-left" aria-hidden="true"></span>
+      <span class="envelope-right" aria-hidden="true"></span>
+      <span class="envelope-front" aria-hidden="true"></span>
+      <span class="envelope-seal" aria-hidden="true">♥</span>
+    </button>
+
+    <button class="open-btn" id="enterSite" type="button">
+      Abrir minha cartinha ♡
+    </button>
+    <div class="tiny">Toque no botão para abrir</div>
+  </div>
+</div>
+
+<!-- CONTAGEM REGRESSIVA E SENHA -->
+
+<div class="countdown-screen hidden" id="countdownGate">
+  <div class="countdown-inner">
+    <div class="smallcaps">Uma surpresa está esperando por você</div>
+    <h1>Uma data especial<br>está chegando ♡</h1>
+    <p class="countdown-message">
+      Preparei algo com muito carinho para você.
+      Enquanto esse dia não chega, deixei aqui uma pequena contagem
+      regressiva até a nossa surpresa.
+    </p>
+
+    <div class="countdown-grid" aria-label="Tempo restante">
+      <div class="time-box">
+        <span class="time-number" id="days">00</span>
+        <span class="time-label">Dias</span>
+      </div>
+      <div class="time-box">
+        <span class="time-number" id="hours">00</span>
+        <span class="time-label">Horas</span>
+      </div>
+      <div class="time-box">
+        <span class="time-number" id="minutes">00</span>
+        <span class="time-label">Minutos</span>
+      </div>
+      <div class="time-box">
+        <span class="time-number" id="seconds">00</span>
+        <span class="time-label">Segundos</span>
+      </div>
+    </div>
+
+    <p id="countdownFootnote" class="countdown-message">
+      A surpresa será liberada automaticamente no dia 29 de outubro. ♡
+    </p>
+
+    <div class="password-area">
+      <p>Não quer esperar? Se você tiver a senha, pode abrir a surpresa antes. 💗</p>
+      <form id="passwordForm">
+        <input id="passwordInput" type="password"
+          inputmode="numeric" autocomplete="off"
+          placeholder="Digite a senha" aria-label="Senha de acesso">
+        <button class="open-btn" type="submit">Desbloquear surpresa ♡</button>
+      </form>
+      <div id="passwordError" class="password-error" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<button class="ambient-control hidden" id="ambientButton" type="button">
+  ♫ Ativar música ambiente
+</button>
+
+<audio id="ambientAudio" src="ambiente.mp3" loop preload="auto"></audio>
+
+<!-- CONTEÚDO ORIGINAL + NOVAS SEÇÕES -->
+
+<main id="mainSite" class="hidden">
+
+  <header class="hero" id="inicio">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+
+    <div class="hero-inner">
+      <div class="eyebrow">Um pequeno segredo feito com carinho</div>
+
+      <div class="photo-wrap">
+        <img src="amor.png" alt="Foto da Caroço"
+          onerror="this.style.display='none';this.parentElement.style.background='#fff9f1';">
+      </div>
+
+      <h1>Feliz aniversário,<br>meu Caroço<span class="heart"> ♡</span></h1>
+
+      <p class="subtitle">
+        Hoje é o seu dia, mas quem ganhou um presente fui eu:
+        a sorte de ter conhecido alguém tão especial quanto você.
+      </p>
+
+      <a class="open-btn" href="#cartinha">
+        Tem uma coisinha pra você <span>♡</span>
+      </a>
+      <div class="tiny">Feito especialmente para você</div>
+    </div>
+  </header>
+
+  <!-- CARTINHA ORIGINAL: TEXTO PRESERVADO -->
+
+  <section id="cartinha">
+    <div class="section-inner">
+      <div class="kicker">Capítulo um · No seu dia</div>
+      <h2>Feliz vida, Caroço. ♡</h2>
+
+      <div class="letter-card">
+        <p>Oi, Caroço. 💗</p>
+        <p>
+          Hoje é o seu aniversário, e eu queria que você soubesse
+          o quanto desejo coisas bonitas para a sua vida.
+          Que não faltem motivos para sorrir, pessoas que cuidem
+          de você de verdade, sonhos se realizando e paz até
+          nos dias mais corridos.
+        </p>
+        <p>
+          Eu sou muito grato por ter te conhecido. Talvez você
+          nem imagine o quanto a sua presença, o seu jeitinho
+          e até as pequenas conversas conseguem deixar meu dia
+          melhor. Tem algo em você que me faz querer te conhecer
+          cada vez mais e guardar com carinho cada detalhe.
+        </p>
+        <p>
+          Gosto de você mais do que talvez eu tenha conseguido
+          demonstrar. Não sei se existe uma forma perfeita de
+          dizer isso, então resolvi fazer algo simples, mas que
+          fosse só seu. Você merece se sentir especial hoje —
+          e não só hoje.
+        </p>
+        <p>
+          Que esse novo ciclo te traga felicidade, amor, leveza
+          e tudo aquilo que seu coração deseja. Obrigado por ter
+          cruzado o meu caminho. Espero poder continuar
+          conhecendo essa pessoa linda que você é, com calma,
+          sinceridade e muitos sorrisos.
+        </p>
+        <p>
+          Feliz aniversário, meu Caroço. Que seu dia seja tão
+          especial quanto você tem se tornado para mim. ♡
+        </p>
+        <p>
+          Com muito carinho,<br>
+          <span>alguém que fica feliz por ter você por perto</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÚSICA ORIGINAL PRESERVADA -->
+
+  <section class="music" id="musica">
+    <div class="section-inner">
+      <div class="kicker">Capítulo dois · Trilha sonora</div>
+      <h2>Uma música que me faz pensar em você.</h2>
+      <p>
+        Queria que essa música também fizesse parte da sua surpresa.
+        Aperte para ouvir aqui mesmo, sem precisar sair do site. ♡
+      </p>
+
+      <div class="music-card">
+        <div class="music-top">
+          <div class="vinyl" aria-hidden="true"><span>♡</span></div>
+          <div>
+            <h3>A nossa música</h3>
+            <p>Uma música especial para alguém especial. 💗</p>
+          </div>
+        </div>
+
+        <button class="open-btn play-btn" id="playMusic" type="button">
+          ▶ Tocar música aqui
+        </button>
+        <div id="playerArea"></div>
+        <p style="font-size:12px;margin-top:12px">
+          A reprodução depende da conexão com a internet.
+          Se necessário, use os controles do áudio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOVAS CARTINHAS SURPRESA -->
+
+  <section class="surprise-letters" id="cartinhas-surpresa">
+    <div class="section-inner">
+      <div class="kicker">Um carinho para cada momento</div>
+      <h2>Abra uma cartinha. ♡</h2>
+      <p>
+        Escolha uma das cartinhas. Cada uma guarda algumas palavras
+        que eu queria que você pudesse ler quando precisasse.
+      </p>
+
+      <div class="letter-options">
+        <button class="mini-letter" data-note="saudade" type="button">
+          <span>💌</span>Quando sentir saudade
+        </button>
+        <button class="mini-letter" data-note="triste" type="button">
+          <span>🌷</span>Quando estiver triste
+        </button>
+        <button class="mini-letter" data-note="sorrir" type="button">
+          <span>☀️</span>Quando quiser sorrir
+        </button>
+        <button class="mini-letter" data-note="especial" type="button">
+          <span>💗</span>Quando precisar lembrar
+        </button>
+      </div>
+
+      <div class="love-note" id="loveNote" aria-live="polite">
+        <p id="loveNoteText"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOVO CÉU ESTRELADO -->
+
+  <section class="star-section" id="ceu-estrelado">
+    <div class="star-sky" id="starSky" aria-hidden="true"></div>
+    <div class="section-inner star-content">
+      <div class="kicker">Um pedacinho do universo</div>
+      <h2>Para alguém que ilumina. ✨</h2>
+      <div class="moon" aria-hidden="true"></div>
+      <p>
+        Entre tantas estrelas no céu, eu queria que você nunca
+        esquecesse o brilho que existe em você.
+      </p>
+      <div class="star-message">
+        <p>
+          Talvez eu não consiga colocar o céu inteiro nas suas mãos,
+          mas posso deixar aqui um lembrete: você é uma pessoa
+          especial, e fico feliz por nossos caminhos terem se cruzado. ♡
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOVO ÁLBUM: CINCO ESPAÇOS EDITÁVEIS -->
+
+  <section class="gallery-section" id="album">
+    <div class="section-inner">
+      <div class="kicker">Pequenos registros, muito carinho</div>
+      <h2>Um álbum só seu. ♡</h2>
+      <p>
+        Algumas fotos para guardar momentos e lembranças.
+        Este álbum tem cinco espaços para você personalizar.
+      </p>
+
+      <div class="photo-gallery">
+        <div class="gallery-item">
+          <img src="amor.png" alt="Foto 1 do álbum">
+          <div class="gallery-caption">Um registro especial ♡</div>
+        </div>
+        <div class="gallery-item">
+          <img src="amor.png" alt="Foto 2 do álbum">
+          <div class="gallery-caption">Um sorriso que merece ser lembrado</div>
+        </div>
+        <div class="gallery-item">
+          <img src="amor.png" alt="Foto 3 do álbum">
+          <div class="gallery-caption">Um pedacinho de carinho 💗</div>
+        </div>
+        <div class="gallery-item">
+          <img src="amor.png" alt="Foto 4 do álbum">
+          <div class="gallery-caption">Uma lembrança bonita</div>
+        </div>
+        <div class="gallery-item">
+          <img src="amor.png" alt="Foto 5 do álbum">
+          <div class="gallery-caption">E muitas outras que ainda virão ✨</div>
+        </div>
+      </div>
+
+      <p class="gallery-tip">
+        Para trocar uma foto, envie a imagem ao GitHub e altere o nome
+        no atributo src da foto correspondente.
+      </p>
+    </div>
+  </section>
+
+  <!-- SURPRESA FINAL ORIGINAL PRESERVADA -->
+
+  <section class="secret" id="surpresa">
+    <div class="section-inner">
+      <div class="kicker" style="color:#efb7ca">
+        Capítulo três · Mais uma coisinha
+      </div>
+      <h2>Antes de você ir…</h2>
+      <p>Guardei uma última mensagem aqui. Só abra quando quiser. ♡</p>
+
+      <div class="secret-box">
+        <button class="open-btn" id="reveal" type="button">
+          Abrir a surpresa ♡
+        </button>
+
+        <div class="secret-content" id="secretContent" aria-live="polite">
+          <p>
+            Se eu pudesse escolher um presente para mim neste seu
+            aniversário, seria a chance de continuar fazendo parte
+            da sua vida e de conhecer cada vez mais esse seu jeitinho
+            que tanto gosto.
+          </p>
+          <p>
+            Eu não sei exatamente o que o futuro guarda, mas sei que
+            conhecer você já foi algo pelo qual sou muito grato.
+            E queria que você soubesse disso, sem pressão e sem
+            precisar responder nada agora.
+          </p>
+          <p>
+            Feliz aniversário, Caroço. Você é especial pra mim. 💗
+          </p>
+          <div style="font-size:28px;margin-top:12px">♡ ✨ ♡</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Feito com carinho, pensando em você <span class="heart">♥</span>
+  </footer>
+</main>
+
+<script>
+/* DATA DO ANIVERSÁRIO:
+   29/10/2026 às 00:00 no horário de Brasília (UTC-3). */
+const unlockDate = new Date("2026-10-29T03:00:00Z");
+const ACCESS_PASSWORD = "260412";
+
+const intro = document.getElementById("intro");
+const countdownGate = document.getElementById("countdownGate");
+const mainSite = document.getElementById("mainSite");
+const ambientAudio = document.getElementById("ambientAudio");
+const ambientButton = document.getElementById("ambientButton");
+
+let siteUnlocked = false;
+
+/* ABRIR O ENVELOPE E MOSTRAR A CONTAGEM */
+
+function enter() {
+  intro.classList.add("hidden");
+
+  if (Date.now() >= unlockDate.getTime()) {
+    unlockSite();
+  } else {
+    countdownGate.classList.remove("hidden");
+    ambientButton.classList.remove("hidden");
+    updateCountdown();
+    tryAmbientMusic();
+  }
+
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+document.getElementById("enterSite").addEventListener("click", enter);
+document.getElementById("openLetter").addEventListener("click", enter);
+
+/* CONTAGEM REGRESSIVA */
+
+function updateCountdown() {
+  if (siteUnlocked) return;
+
+  const remaining = unlockDate.getTime() - Date.now();
+
+  if (remaining <= 0) {
+    unlockSite();
+    return;
+  }
+
+  const days = Math.floor(remaining / 86400000);
+  const hours = Math.floor((remaining % 86400000) / 3600000);
+  const minutes = Math.floor((remaining % 3600000) / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  document.getElementById("days").textContent = String(days).padStart(2, "0");
+  document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+  document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+  document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+}
+
+const countdownTimer = setInterval(updateCountdown, 1000);
+
+/* DESBLOQUEAR O SITE */
+
+function unlockSite() {
+  if (siteUnlocked) return;
+  siteUnlocked = true;
+
+  clearInterval(countdownTimer);
+  intro.classList.add("hidden");
+  countdownGate.classList.add("hidden");
+  mainSite.classList.remove("hidden");
+  ambientButton.classList.remove("hidden");
+
+  document.title = "Feliz aniversário, meu Caroço ♡";
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  createHearts();
+  createStars();
+  tryAmbientMusic();
+}
+
+/* SENHA DE ACESSO ANTECIPADO */
+
+document.getElementById("passwordForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const entered = document.getElementById("passwordInput").value;
+  const error = document.getElementById("passwordError");
+
+  if (entered === ACCESS_PASSWORD) {
+    error.textContent = "";
+    unlockSite();
+  } else {
+    error.textContent = "Essa senha não está correta. Tente novamente. ♡";
+    document.getElementById("passwordInput").value = "";
+  }
+});
+
+/* MÚSICA AMBIENTE
+   O navegador pode exigir uma interação do usuário antes de tocar. */
+
+async function tryAmbientMusic() {
+  if (ambientAudio.paused) {
+    try {
+      await ambientAudio.play();
+      ambientButton.textContent = "♫ Pausar música ambiente";
+    } catch (error) {
+      ambientButton.textContent = "♫ Ativar música ambiente";
+    }
+  }
+}
+
+ambientButton.addEventListener("click", async function() {
+  if (ambientAudio.paused) {
+    try {
+      await ambientAudio.play();
+      ambientButton.textContent = "♫ Pausar música ambiente";
+    } catch (error) {
+      ambientButton.textContent = "Toque para tentar novamente";
+    }
+  } else {
+    ambientAudio.pause();
+    ambientButton.textContent = "♫ Ativar música ambiente";
+  }
+});
+
+ambientAudio.addEventListener("play", function() {
+  ambientButton.textContent = "♫ Pausar música ambiente";
+});
+ambientAudio.addEventListener("pause", function() {
+  ambientButton.textContent = "♫ Ativar música ambiente";
+});
+
+/* MÚSICA ORIGINAL DA SEÇÃO PRESERVADA */
+
+const musicButton = document.getElementById("playMusic");
+const playerArea = document.getElementById("playerArea");
+const vinylDisc = document.querySelector(".vinyl");
+let driveAudio = null;
+
+musicButton.addEventListener("click", async function() {
+  if (!driveAudio) {
+    driveAudio = document.createElement("audio");
+    driveAudio.className = "player-audio";
+    driveAudio.controls = true;
+    driveAudio.preload = "metadata";
+    driveAudio.src = "musica.mp3";
+
+    driveAudio.addEventListener("play", function() {
+      vinylDisc.classList.add("playing");
+      musicButton.textContent = "⏸ Pausar música";
+    });
+    driveAudio.addEventListener("pause", function() {
+      vinylDisc.classList.remove("playing");
+      musicButton.textContent = "▶ Tocar música aqui";
+    });
+    driveAudio.addEventListener("ended", function() {
+      vinylDisc.classList.remove("playing");
+      musicButton.textContent = "▶ Tocar música aqui";
+    });
+    driveAudio.addEventListener("error", function() {
+      musicButton.textContent = "Não foi possível carregar a música";
+    });
+
+    playerArea.appendChild(driveAudio);
+  }
+
+  if (driveAudio.paused) {
+    try {
+      await driveAudio.play();
+    } catch (error) {
+      musicButton.textContent = "▶ Toque para tentar novamente";
+    }
+  } else {
+    driveAudio.pause();
+  }
+});
+
+/* ABRIR E FECHAR A SURPRESA FINAL ORIGINAL */
+
+document.getElementById("reveal").addEventListener("click", function() {
+  const box = document.getElementById("secretContent");
+  const open = box.classList.toggle("show");
+
+  this.textContent = open
+    ? "Guardar a surpresa ♡"
+    : "Abrir a surpresa ♡";
+
+  if (open) {
+    box.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+});
+
+/* CARTINHAS SURPRESA */
+
+const notes = {
+  saudade: "Se você estiver sentindo saudade, queria que essa cartinha te lembrasse que existe alguém que gosta muito de conversar com você e que fica feliz por ter te conhecido. Espero que logo apareça um motivo novo para sorrir. 💗",
+  triste: "Se hoje não estiver sendo um dia bom, não precisa fingir que está tudo bem o tempo inteiro. Espero que você se trate com carinho, respeite seu tempo e se lembre de que dias difíceis também passam. Você merece coisas bonitas. 🌷",
+  sorrir: "Aqui vai um lembrete: seu sorriso merece aparecer muitas vezes, não só hoje. Espero que a vida te surpreenda com pequenas alegrias, boas notícias e momentos que deem vontade de guardar para sempre. ☀️",
+  especial: "Você é especial para mim, Caroço. Gosto de conhecer seu jeitinho, das nossas conversas e da oportunidade de ter você por perto. Obrigado por cruzar meu caminho. Não queria deixar passar a chance de te dizer isso. ♡"
+};
+
+document.querySelectorAll(".mini-letter").forEach(function(button) {
+  button.addEventListener("click", function() {
+    const noteKey = this.dataset.note;
+    document.getElementById("loveNoteText").textContent = notes[noteKey];
+    const noteBox = document.getElementById("loveNote");
+    noteBox.classList.add("show");
+    noteBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+});
+
+/* CÉU ESTRELADO */
+
+function createStars() {
+  const sky = document.getElementById("starSky");
+  if (!sky || sky.children.length > 0) return;
+
+  for (let i = 0; i < 85; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    const size = Math.random() * 3 + 1;
+
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    star.style.animationDuration = (1.5 + Math.random() * 3) + "s";
+
+    sky.appendChild(star);
+  }
+}
+
+/* CORAÇÕES FLUTUANTES ORIGINAIS */
+
+function createHearts() {
+  const hero = document.querySelector(".hero");
+  if (!hero || hero.querySelector(".float-heart")) return;
+
+  for (let i = 0; i < 9; i++) {
+    const heart = document.createElement("span");
+    heart.className = "float-heart";
+    heart.textContent = ["♡", "♥", "✧"][i % 3];
+    heart.style.left = (7 + i * 11) + "%";
+    heart.style.animationDelay = (i * 0.9) + "s";
+    heart.style.animationDuration = (7 + (i % 4)) + "s";
+    hero.appendChild(heart);
+  }
+}
+
+/* VISITA DIRETA APÓS A DATA:
+   Se a data já chegou, a tela de contagem não é necessária.
+   O envelope continua aparecendo para preservar a abertura original. */
+
+updateCountdown();
+</script>
+
+</body>
+</html>
